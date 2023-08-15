@@ -1,6 +1,7 @@
 const headers = {
     "X-API-KEY": "1KRVB5P-164419V-P3Q2QH0-4YTTAMW"
   };
+  const hintElem = document.querySelector('#hint');
   
   async function getMoviesByName(name, page = 1, limit = 1) {
     try {
@@ -29,7 +30,7 @@ const headers = {
       const filmName = document.querySelector('#title').value;
       getMoviesByName(filmName).then(movies => {
         if(movies.length === 0) {
-          const hintElem = document.querySelector('#hint');
+          hintElem.innerHTML = 'Такого фильма нет на Кинопоиске.'
           hintElem.style.opacity = 1;
           setTimeout(() => {
             hintElem.style.opacity = 0;
@@ -42,6 +43,12 @@ const headers = {
               console.log("-----------------------");
               document.getElementById("moviePoster").src = movie.poster;
               document.getElementById("movieDesc").innerText = movie.description;
+              if (!movie.poster || !movie.description)
+              hintElem.innerHTML = 'Нет постера/описания.'
+              hintElem.style.opacity = 1;
+              setTimeout(() => {
+             hintElem.style.opacity = 0;
+            }, 2000);
           });
       }
       

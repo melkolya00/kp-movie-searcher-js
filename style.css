@@ -25,17 +25,16 @@ body {
 }
 
 #movieDesc {
-    text-align: justify;
-    font-size: 1rem;
+    font-size: 1.5rem;
     width: 50%;
-    margin: 0 20px 0;
+    margin-left: 40px;
 }
 
 #moviePoster {
-    max-height: 350px;
+    max-height: 450px;
     height: auto;
     width: auto;
-    margin-right: 20px;
+    margin-right: 40px;
 }
 
   .form__field {
