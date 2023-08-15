@@ -28,12 +28,22 @@ const headers = {
     if (event.code.toLowerCase()==="enter"){
       const filmName = document.querySelector('#title').value;
       getMoviesByName(filmName).then(movies => {
-            movies.forEach(movie => {
-            console.log("Title:", movie.name);
-            console.log("Rating:", movie.rating);
-            console.log("Poster:", movie.poster);
-            console.log("-----------------------");
-           document.getElementById("moviePoster").src = movie.poster;
-         });
+        if(movies.length === 0) {
+          const hintElem = document.querySelector('#hint');
+          hintElem.style.opacity = 1;
+          setTimeout(() => {
+            hintElem.style.opacity = 0;
+        }, 2000);
+      } else {
+          movies.forEach(movie => {
+              console.log("Title:", movie.name);
+              console.log("Rating:", movie.rating);
+              console.log("Poster:", movie.poster);
+              console.log("-----------------------");
+              document.getElementById("moviePoster").src = movie.poster;
+              document.getElementById("movieDesc").innerText = movie.description;
+          });
+      }
+      
     }
       )}}
