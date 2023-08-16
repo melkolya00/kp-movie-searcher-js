@@ -28,10 +28,18 @@ const headers = {
       console.error(error);
     }
   }
-  document.addEventListener("keyup", handleKey);
-  function handleKey(event){
+  document.addEventListener("keyup", showResults);
+  function showResults(event){
     if (event.code.toLowerCase()==="enter"){
-      const filmName = document.querySelector('#title').value;
+      const filmName = document.querySelector('#title').value.trim();
+        if (!filmName) { // проверяем пустая ли строка
+            elements.hintElem.innerHTML = 'Введите название фильма.';
+            elements.hintElem.style.opacity = 1;
+            setTimeout(() => {
+                elements.hintElem.style.opacity = 0;
+            }, 2000);
+            return;
+        }
       getMoviesByName(filmName).then(movies => {
         if(movies.length === 0) {
           elements.hintElem.innerHTML = 'Такого фильма нет на Кинопоиске.'
@@ -42,12 +50,24 @@ const headers = {
       } else {
           movies.forEach(movie => {
               elements.backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;
+              setTimeout(() => {
+                elements.backgroundElem.classList.add('loaded');
+              }, 1000);
               elements.backgroundElem.style.filter = "blur(30px)";
               elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
               elements.movieRating.innerText = movie.rating;
               elements.movieGenres.innerText = movie.genres.join(", ");
+              elements.moviePoster.style.opacity = 0;
               elements.moviePoster.src = movie.poster;
+              elements.moviePoster.onload = () => {
+                setTimeout(() => {
+                  elements.moviePoster.style.opacity = 1;
+                }, 500);
+            };
               elements.movieDesc.innerText = movie.description;
+              setTimeout(() => {
+              elements.movieDesc.style.opacity = 1;
+            }, 500);
               if (!movie.poster || !movie.description){
               elements.hintElem.innerHTML = 'Нет постера/описания.'
               elements.hintElem.style.opacity = 1;
