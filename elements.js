@@ -7,3 +7,5 @@ export const movieGenres = document.getElementById("movieGenres");
 export const moviePoster =  document.getElementById("moviePoster");
 export const movieDesc =  document.getElementById("movieDesc");
 export const movieLength =  document.getElementById("movieLength");
+export const movieCountries =  document.getElementById("movieCountries");
+export let movieCountriesArr = [];
