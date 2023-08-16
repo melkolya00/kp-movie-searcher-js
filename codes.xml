@@ -2470,6 +2470,16 @@
 <location-precise>Южная часть Африки</location-precise>
 </country>
 <country>
+<name>Южная Джорджия и Южные Сандвичевы острова</name>
+<fullname> </fullname>
+<english>South Georgia and the South Sandwich Islands</english>
+<alpha2>GS</alpha2>
+<alpha3>SGS</alpha3>
+<iso>239</iso>
+<location> </location>
+<location-precise>Южный океан</location-precise>
+</country>
+<country>
 <name>Южная Осетия</name>
 <fullname>Республика Южная Осетия</fullname>
 <english>South Ossetia</english>
