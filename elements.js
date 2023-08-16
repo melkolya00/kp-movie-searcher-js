@@ -6,3 +6,4 @@ export const movieRating =  document.getElementById("movieRating");
 export const movieGenres = document.getElementById("movieGenres");
 export const moviePoster =  document.getElementById("moviePoster");
 export const movieDesc =  document.getElementById("movieDesc");
+export const movieLength =  document.getElementById("movieLength");

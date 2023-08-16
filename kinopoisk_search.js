@@ -57,6 +57,7 @@ const headers = {
               elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
               elements.movieRating.innerText = movie.rating;
               elements.movieGenres.innerText = movie.genres.join(", ");
+              elements.movieLength.innerText = `${movie.movieLength} мин. / ${Math.floor(movie.movieLength/60)} ч. ${movie.movieLength%60} мин.`;
               elements.moviePoster.style.opacity = 0;
               elements.moviePoster.src = movie.poster;
               elements.moviePoster.onload = () => {
