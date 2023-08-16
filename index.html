@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
     <script src="kinopoisk_search.js" defer></script>
 </head>
 <body>
         <div class="form__group field">
             <input type="input" class="form__field" placeholder="Film title" name="title" id='title' required />
             <label for="title" class="form__label">Film Title</label>
+    </div>
+    <div class="title--block">
+        <p id = "movieTitle"></p>
+        <p id = "movieGenres"></p>
     </div>
     <div class="result--block">
         <span id="movieDesc"></span>

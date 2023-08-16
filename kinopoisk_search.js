@@ -41,6 +41,8 @@ const headers = {
               console.log("Rating:", movie.rating);
               console.log("Poster:", movie.poster);
               console.log("-----------------------");
+              document.getElementById("movieTitle").innerText = `${movie.name} (${movie.year})`;
+              document.getElementById("movieGenres").innerText = movie.genres.join(", ");
               document.getElementById("moviePoster").src = movie.poster;
               document.getElementById("movieDesc").innerText = movie.description;
               if (!movie.poster || !movie.description){
