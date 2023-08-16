@@ -9,20 +9,27 @@ body {
     background-color: #222222;
   }
 
-  .title--block{
+  .head--block{
     display: flex;
     flex-direction: column;
   }
 
-  .title--block #movieTitle{
-    font-weight: bold;
-    font-size: 2rem;
-  }
-  .title--block #movieGenres{
+  .head--block #movieGenres{
     font-weight: bold;
     font-size: 1rem;
     text-align: center;
     margin-top: 5px;
+  }
+
+  .title--block{
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    gap: 20px;
+  }
+
+  .title--block #movieTitle{
+    font-size: 2rem;
   }
 
 .form__group {
@@ -43,6 +50,8 @@ body {
 
 .result--background {
   position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
   top: 0;
   right: 0;
   bottom: 0;
