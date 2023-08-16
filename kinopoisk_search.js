@@ -2,7 +2,8 @@ const headers = {
     "X-API-KEY": "1KRVB5P-164419V-P3Q2QH0-4YTTAMW"
   };
   const hintElem = document.querySelector('#hint');
-  
+  const resultBlock = document.querySelector('.result--block');
+  const backgroundElem = resultBlock.querySelector('.result--background');
   async function getMoviesByName(name, page = 1, limit = 1) {
     try {
       const response = await fetch('https://api.kinopoisk.dev/v1.2/movie/search?' + new URLSearchParams({
@@ -41,6 +42,8 @@ const headers = {
               console.log("Rating:", movie.rating);
               console.log("Poster:", movie.poster);
               console.log("-----------------------");
+              backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;  // Устанавливаем фоновое изображение для <body>
+              backgroundElem.style.filter = "blur(30px)";  // Применяем размытие к фону <body>
               document.getElementById("movieTitle").innerText = `${movie.name} (${movie.year})`;
               document.getElementById("movieGenres").innerText = movie.genres.join(", ");
               document.getElementById("moviePoster").src = movie.poster;
@@ -53,6 +56,5 @@ const headers = {
             }, 2000);}
           });
       }
-      
     }
       )}}

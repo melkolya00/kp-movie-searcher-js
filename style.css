@@ -33,11 +33,21 @@ body {
   }
 
   .result--block {
+    position: relative;
     display: flex;
     justify-content: space-between;
     color: #fff;
     align-items: start;
     margin-top: 50px;
+}
+
+.result--background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1; /* чтобы он был позади основного содержимого */
 }
 
 #movieDesc {
