@@ -45,7 +45,6 @@ const headers = {
               elements.backgroundElem.style.filter = "blur(30px)";
               elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
               elements.movieRating.innerText = movie.rating;
-              setRatingColor (movie.rating, elements.movieRating);
               elements.movieGenres.innerText = movie.genres.join(", ");
               elements.moviePoster.src = movie.poster;
               elements.movieDesc.innerText = movie.description;
@@ -55,6 +54,7 @@ const headers = {
               setTimeout(() => {
              elements.hintElem.style.opacity = 0;
             }, 2000);}
+            setRatingColor (movie.rating, elements.movieRating);
           });
       }
     }
