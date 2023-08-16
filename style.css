@@ -1,12 +1,28 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Comfortaa', cursive;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     font-size: 1.5rem;
+    color: #fff;
     background-color: #222222;
+  }
+
+  .title--block{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title--block #movieTitle{
+    font-weight: bold;
+    font-size: 2rem;
+  }
+  .title--block #movieGenres{
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 5px;
   }
 
 .form__group {
