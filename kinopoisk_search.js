@@ -1,9 +1,12 @@
+import { API_KEY } from './config.js';
+import * as elements from './elements.js';
 const headers = {
-    "X-API-KEY": "1KRVB5P-164419V-P3Q2QH0-4YTTAMW"
+    "X-API-KEY": API_KEY
   };
-  const hintElem = document.querySelector('#hint');
-  const resultBlock = document.querySelector('.result--block');
-  const backgroundElem = resultBlock.querySelector('.result--background');
+  function setRatingColor(rating, element) {
+    element.style.color = rating < 5.0 ? "red" :
+                          rating < 7.0 ? "yellow" : "green";
+}
   async function getMoviesByName(name, page = 1, limit = 1) {
     try {
       const response = await fetch('https://api.kinopoisk.dev/v1.2/movie/search?' + new URLSearchParams({
@@ -31,30 +34,30 @@ const headers = {
       const filmName = document.querySelector('#title').value;
       getMoviesByName(filmName).then(movies => {
         if(movies.length === 0) {
-          hintElem.innerHTML = 'Такого фильма нет на Кинопоиске.'
-          hintElem.style.opacity = 1;
+          elements.hintElem.innerHTML = 'Такого фильма нет на Кинопоиске.'
+          elements.hintElem.style.opacity = 1;
           setTimeout(() => {
-            hintElem.style.opacity = 0;
+            elements.hintElem.style.opacity = 0;
         }, 2000);
       } else {
           movies.forEach(movie => {
-              console.log("Title:", movie.name);
-              console.log("Rating:", movie.rating);
-              console.log("Poster:", movie.poster);
-              console.log("-----------------------");
-              backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;  // Устанавливаем фоновое изображение для <body>
-              backgroundElem.style.filter = "blur(30px)";  // Применяем размытие к фону <body>
-              document.getElementById("movieTitle").innerText = `${movie.name} (${movie.year})`;
-              document.getElementById("movieGenres").innerText = movie.genres.join(", ");
-              document.getElementById("moviePoster").src = movie.poster;
-              document.getElementById("movieDesc").innerText = movie.description;
+              elements.backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;
+              elements.backgroundElem.style.filter = "blur(30px)";
+              elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
+              elements.movieRating.innerText = movie.rating;
+              setRatingColor (movie.rating, elements.movieRating);
+              elements.movieGenres.innerText = movie.genres.join(", ");
+              elements.moviePoster.src = movie.poster;
+              elements.movieDesc.innerText = movie.description;
               if (!movie.poster || !movie.description){
-              hintElem.innerHTML = 'Нет постера/описания.'
-              hintElem.style.opacity = 1;
+              elements.hintElem.innerHTML = 'Нет постера/описания.'
+              elements.hintElem.style.opacity = 1;
               setTimeout(() => {
-             hintElem.style.opacity = 0;
+             elements.hintElem.style.opacity = 0;
             }, 2000);}
           });
       }
     }
       )}}
+
+      
