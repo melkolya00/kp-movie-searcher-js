@@ -1,4 +1,5 @@
-const headers = { "X-API-KEY": "1KRVB5P-164419V-P3Q2QH0-4YTTAMW" };
+import { API_KEY } from "./config.js";
+const headers = { "X-API-KEY": API_KEY };
 // import { currentMovieName } from "./kinopoisk_search.js";
 export async function getActorsByFilm(name, sex, fields, limit = 10, page = 1) {
   try {
