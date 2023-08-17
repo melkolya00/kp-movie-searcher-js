@@ -1,7 +1,9 @@
 import { API_KEY } from "./config.js";
 import { getCountryCodes } from "./country_flags.js";
+import { getActorsByFilm } from "./kinopoisk_actors.js";
 import * as elements from "./elements.js";
 let movieCountriesArr = [];
+let currentMovieName = "";
 const headers = {
   "X-API-KEY": API_KEY,
 };
@@ -74,6 +76,15 @@ function updateUI(movie) {
   }, 2000);
   elements.backgroundElem.style.filter = "blur(20px)";
   elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
+  currentMovieName = movie.name;
+  getActorsByFilm(currentMovieName).then((actors) => {
+    actors.forEach((actor) => {
+      console.log(actor.enName);
+      console.log(actor.name);
+      console.log(actor.age);
+      console.log();
+    });
+  });
   // innerWithTimeout(elements.movieTitle, `${movie.name} (${movie.year})`);
   elements.movieRating.innerText = movie.rating;
   // innerWithTimeout(elements.movieRating, movie.rating);
@@ -122,3 +133,4 @@ function showMessage(msg) {
 export function getMovieCountries() {
   return movieCountriesArr;
 }
+export { currentMovieName };
