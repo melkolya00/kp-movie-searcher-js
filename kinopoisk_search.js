@@ -59,15 +59,26 @@ function showResults(event) {
   }
 }
 
+// function innerWithTimeout(block, data) {
+//   block.style.opacity = 0;
+//   block.innerText = data;
+//   setTimeout(() => {
+//     block.style.opacity = 1;
+//   }, 500);
+// }
+
 function updateUI(movie) {
   elements.backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;
   setTimeout(() => {
     elements.backgroundElem.classList.add("loaded");
-  }, 1000);
-  elements.backgroundElem.style.filter = "blur(30px)";
+  }, 2000);
+  elements.backgroundElem.style.filter = "blur(20px)";
   elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
+  // innerWithTimeout(elements.movieTitle, `${movie.name} (${movie.year})`);
   elements.movieRating.innerText = movie.rating;
+  // innerWithTimeout(elements.movieRating, movie.rating);
   elements.movieGenres.innerText = movie.genres.join(", ");
+  // innerWithTimeout(elements.movieGenres, movie.genres.join(", "));
   elements.movieLength.innerText = `${movie.movieLength} мин. / ${Math.floor(
     movie.movieLength / 60
   )} ч. ${movie.movieLength % 60} мин.`;
@@ -80,6 +91,7 @@ function updateUI(movie) {
   };
   elements.movieDesc.innerText = movie.description;
   setTimeout(() => {
+    elements.descBlock.style.opacity = 1;
     elements.movieDesc.style.opacity = 1;
   }, 500);
   if (!movie.poster) {

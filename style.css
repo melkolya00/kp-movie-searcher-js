@@ -16,6 +16,14 @@ body {
   justify-content: center;
 }
 
+.head--block > * {
+  transition: opacity 1s;
+}
+
+/* #movieCountries > * {
+  transition: opacity 1s;
+} */
+
 .head--block #movieGenres,
 #movieLength {
   font-weight: bold;
@@ -49,6 +57,9 @@ body {
   color: #fff;
   align-items: start;
   margin-top: 50px;
+  padding: 30px 0 30px;
+  width: 905px;
+  height: auto;
 }
 
 .result--background,
@@ -60,7 +71,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: -1; /* чтобы он был позади основного содержимого */
+  z-index: -1;
 }
 
 .result--background {
@@ -71,16 +82,25 @@ body {
   opacity: 1;
 }
 
-#movieDesc {
-  font-size: 1rem;
+.descBlock {
+  min-height: 80%;
   width: 50%;
   margin-left: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 20px 20px 40px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+#movieDesc {
+  font-size: 1rem;
   opacity: 0;
   transition: opacity 1s;
 }
 
 #moviePoster {
   max-height: 450px;
+  border-radius: 10px;
   height: auto;
   width: auto;
   margin-right: 40px;
