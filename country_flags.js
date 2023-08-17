@@ -1,5 +1,4 @@
 import { getMovieCountries } from './kinopoisk_search.js';
-
 let countryNameToCodeMap = {};
 let countriesLoaded = false;
 

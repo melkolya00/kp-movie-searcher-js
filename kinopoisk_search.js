@@ -33,25 +33,22 @@ document.addEventListener("keyup", showResults);
 function showResults(event) {
     if (event.code.toLowerCase() === "enter") {
         const filmName = document.querySelector('#title').value.trim();
-
         if (!filmName) {
             showMessage('Введите название фильма.');
             return;
         }
-
         getMoviesByName(filmName).then(async movies => {
             if (movies.length === 0) {
                 showMessage('Такого фильма нет на Кинопоиске.');
             } else {
                 movies.forEach(async movie => {
                     updateUI(movie);
-                    movieCountriesArr = movie.countries; // Set the movie countries array
+                    movieCountriesArr = movie.countries;
                 });
             }
         });
     }
 }
-
 function showMessage(msg) {
     elements.hintElem.innerHTML = msg;
     elements.hintElem.style.opacity = 1;
@@ -59,7 +56,6 @@ function showMessage(msg) {
         elements.hintElem.style.opacity = 0;
     }, 2000);
 }
-
 async function updateUI(movie) {
     elements.backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;
     setTimeout(() => {
@@ -88,18 +84,21 @@ async function updateUI(movie) {
         elements.movieDesc.style.opacity = 1;
     }, 500);
 
-    if (!movie.poster || !movie.description) {
-        showMessage('Нет постера/описания.');
+    if (!movie.poster) {
+        showMessage('У данного фильма нет постера.');
     }
+    else if (!movie.description) {
+      showMessage('У данного фильма нет описания.');
+  }
 
     setRatingColor(movie.rating, elements.movieRating);
 }
 
 function updateFlags(codes) {
+//   elements.movieCountries.innerHTML = movie.countries.join(' ');
     const flagImages = codes.map(code => {
         return `<img src="https://flagsapi.com/${code.toUpperCase()}/shiny/16.png" alt="${code} flag" title="${code}" />`;
     });
-    elements.movieCountries.innerHTML = movie.countries.join(' ');
     elements.movieCountries.innerHTML = flagImages.join(' ');
 }
 
