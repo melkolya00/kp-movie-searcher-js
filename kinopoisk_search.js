@@ -80,9 +80,9 @@ function updateUI(movie) {
   getActorsByFilm(currentMovieName).then((actors) => {
     actors.forEach((actor) => {
       console.log(actor.enName);
-      console.log(actor.name);
-      console.log(actor.age);
-      console.log();
+      // actor.name?.console.log(actor.name);
+      // console.log(actor.age);
+      // console.log();
     });
   });
   // innerWithTimeout(elements.movieTitle, `${movie.name} (${movie.year})`);
@@ -117,7 +117,9 @@ function updateUI(movie) {
 
 function updateFlags(codes) {
   const flagImages = codes.map((code) => {
-    return `<img src="https://flagsapi.com/${code.toUpperCase()}/shiny/32.png" alt="${code} flag" title="${code}" />`;
+    return code === "SU"
+      ? `<img src="./images/ussr.png" alt="${code} flag" title="${code}" />`
+      : `<img src="https://flagsapi.com/${code.toUpperCase()}/shiny/32.png" alt="${code} flag" title="${code}" />`;
   });
   elements.movieCountries.innerHTML = flagImages.join(" ");
 }

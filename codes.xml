@@ -2010,6 +2010,10 @@
 <location-precise>Западная Африка</location-precise>
 </country>
 <country>
+<name>СССР</name>
+<alpha2>SU</alpha2>
+</country>
+<country>
 <name>Таджикистан</name>
 <fullname>Республика Таджикистан</fullname>
 <english>Tajikistan</english>
