@@ -1,6 +1,6 @@
 export const hintElem = document.querySelector("#hint");
-export const resultBlock = document.querySelector(".result--block");
-export const backgroundElem = resultBlock.querySelector(".result--background");
+export const resultBlock = document.querySelector(".result__block");
+export const backgroundElem = resultBlock.querySelector(".result__background");
 export const movieTitle = document.querySelector("#movieTitle");
 export const movieRating = document.querySelector("#movieRating");
 export const movieGenres = document.querySelector("#movieGenres");
@@ -9,4 +9,5 @@ export const movieDesc = document.querySelector("#movieDesc");
 export const movieLength = document.querySelector("#movieLength");
 export const movieCountries = document.querySelector("#movieCountries");
 export const descBlock = document.querySelector(".descBlock");
+export const actorsBlock = document.querySelector(".actors__block");
 export let movieCountriesArr = [];

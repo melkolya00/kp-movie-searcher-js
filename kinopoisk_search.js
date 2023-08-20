@@ -65,6 +65,7 @@ function resetUI() {
   elements.moviePoster.style.opacity = 0;
   elements.movieDesc.innerText = "";
   elements.descBlock.classList.remove("fade-in");
+  elements.actorsBlock.innerHTML = "";
   elements.descBlock.style.opacity = 0;
   elements.movieDesc.style.opacity = 0;
   elements.movieCountries.innerHTML = "";
@@ -100,7 +101,7 @@ function updateUI(movie) {
   setTimeout(() => {
     elements.backgroundElem.classList.add("loaded");
   }, 2000);
-  elements.backgroundElem.style.filter = "blur(1px)";
+  elements.backgroundElem.style.filter = "blur(30px)";
   elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
   // currentMovieName = movie.name;
   // getActorsByFilm(currentMovieName).then((actors) => {
@@ -109,6 +110,18 @@ function updateUI(movie) {
   //   });
   // });
   elements.movieRating.innerText = movie.rating.kp;
+  if (movie.persons.photo !== null) {
+    elements.actorsBlock.innerHTML = movie.persons
+      .slice(0, 5)
+      .map(
+        (person) => `
+        <div class="actor">
+          <img class="actor__photo" src="${person.photo}" alt="${person.name}" width="115" height="182"/>
+          <div class="actor__name">${person.name}</div>
+        </div>`
+      )
+      .join("");
+  }
   elements.movieGenres.innerText = movie.genres
     .map((genre) => genre.name)
     .join(", ");
