@@ -4,6 +4,21 @@ import { getActorsByFilm } from "./kinopoisk_actors.js";
 import * as elements from "./elements.js";
 let movieCountriesArr = [];
 let currentMovieName = "";
+const selectFields = [
+  "id",
+  "name",
+  "backdrop.previewUrl",
+  "poster.url",
+  "genres.name",
+  "movieLength",
+  "persons.id",
+  "persons.name",
+  "persons.photo",
+  "year",
+  "countries.name",
+  "rating.kp",
+  "description",
+];
 const headers = {
   "X-API-KEY": API_KEY,
 };
@@ -11,14 +26,15 @@ function setRatingColor(rating, element) {
   element.style.color =
     rating < 5.0 ? "red" : rating < 7.0 ? "yellow" : "green";
 }
-async function getMoviesByName(name, page = 1, limit = 1) {
+async function getMoviesByName(name, selectFields, page = 1, limit = 1) {
   try {
     const response = await fetch(
-      "https://api.kinopoisk.dev/v1.2/movie/search?" +
+      "https://api.kinopoisk.dev/v1.3/movie?" +
         new URLSearchParams({
-          query: name,
+          name: name,
           limit: limit,
           page: page,
+          selectFields: selectFields.join(" "),
         }),
       {
         headers: headers,
@@ -37,22 +53,40 @@ async function getMoviesByName(name, page = 1, limit = 1) {
 }
 document.addEventListener("keyup", showResults);
 
+function resetUI() {
+  elements.backgroundElem.style.backgroundImage = "";
+  elements.backgroundElem.classList.remove("loaded");
+  elements.backgroundElem.style.filter = "";
+  elements.movieTitle.innerText = "";
+  elements.movieRating.innerText = "";
+  elements.movieGenres.innerText = "";
+  elements.movieLength.innerText = "";
+  elements.moviePoster.src = "";
+  elements.moviePoster.style.opacity = 0;
+  elements.movieDesc.innerText = "";
+  elements.descBlock.classList.remove("fade-in");
+  elements.descBlock.style.opacity = 0;
+  elements.movieDesc.style.opacity = 0;
+  elements.movieCountries.innerHTML = "";
+}
+
 function showResults(event) {
   if (event.code.toLowerCase() === "enter") {
     elements.movieCountries.innerHTML = "";
     const filmName = document.querySelector("#title").value.trim();
     if (!filmName) {
-      // проверяем пустая ли строка
+      resetUI();
       showMessage("Введите название фильма.");
       return;
     }
-    getMoviesByName(filmName).then(async (movies) => {
+    getMoviesByName(filmName, selectFields).then(async (movies) => {
       if (movies.length === 0) {
+        resetUI();
         showMessage("Такого фильма нет на Кинопоиске.");
       } else {
         movies.forEach(async (movie) => {
           updateUI(movie);
-          movieCountriesArr = movie.countries;
+          movieCountriesArr = movie.countries.map((country) => country.name);
           const countryCodesForThisMovie = await getCountryCodes();
           updateFlags(countryCodesForThisMovie);
         });
@@ -61,46 +95,35 @@ function showResults(event) {
   }
 }
 
-// function innerWithTimeout(block, data) {
-//   block.style.opacity = 0;
-//   block.innerText = data;
-//   setTimeout(() => {
-//     block.style.opacity = 1;
-//   }, 500);
-// }
-
 function updateUI(movie) {
-  elements.backgroundElem.style.backgroundImage = `url(${movie.backdrop})`;
+  elements.backgroundElem.style.backgroundImage = `url(${movie.backdrop.previewUrl})`;
   setTimeout(() => {
     elements.backgroundElem.classList.add("loaded");
   }, 2000);
-  elements.backgroundElem.style.filter = "blur(20px)";
+  elements.backgroundElem.style.filter = "blur(1px)";
   elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
-  currentMovieName = movie.name;
-  getActorsByFilm(currentMovieName).then((actors) => {
-    actors.forEach((actor) => {
-      console.log(actor.enName);
-      // actor.name?.console.log(actor.name);
-      // console.log(actor.age);
-      // console.log();
-    });
-  });
-  // innerWithTimeout(elements.movieTitle, `${movie.name} (${movie.year})`);
-  elements.movieRating.innerText = movie.rating;
-  // innerWithTimeout(elements.movieRating, movie.rating);
-  elements.movieGenres.innerText = movie.genres.join(", ");
-  // innerWithTimeout(elements.movieGenres, movie.genres.join(", "));
+  // currentMovieName = movie.name;
+  // getActorsByFilm(currentMovieName).then((actors) => {
+  //   actors.forEach((actor) => {
+  //     console.log(actor.enName);
+  //   });
+  // });
+  elements.movieRating.innerText = movie.rating.kp;
+  elements.movieGenres.innerText = movie.genres
+    .map((genre) => genre.name)
+    .join(", ");
   elements.movieLength.innerText = `${movie.movieLength} мин. / ${Math.floor(
     movie.movieLength / 60
   )} ч. ${movie.movieLength % 60} мин.`;
   elements.moviePoster.style.opacity = 0;
-  elements.moviePoster.src = movie.poster;
+  elements.moviePoster.src = movie.poster.url;
   elements.moviePoster.onload = () => {
     setTimeout(() => {
       elements.moviePoster.style.opacity = 1;
     }, 500);
   };
   elements.movieDesc.innerText = movie.description;
+  elements.descBlock.classList.add("fade-in");
   setTimeout(() => {
     elements.descBlock.style.opacity = 1;
     elements.movieDesc.style.opacity = 1;
