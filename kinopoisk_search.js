@@ -135,7 +135,7 @@ function updateUI(movie) {
     showMessage("У данного фильма нет описания.");
   }
 
-  setRatingColor(movie.rating, elements.movieRating);
+  setRatingColor(movie.rating.kp, elements.movieRating);
 }
 
 function updateFlags(codes) {
