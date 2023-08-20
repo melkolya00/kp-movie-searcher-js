@@ -90,8 +90,13 @@ body {
   border-radius: 10px;
   padding: 20px 20px 40px;
   opacity: 0;
+  /* transition: opacity 1s; */
+}
+
+.descBlock.fade-in {
   transition: opacity 1s;
 }
+
 #movieDesc {
   font-size: 1rem;
   opacity: 0;
