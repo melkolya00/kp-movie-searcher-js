@@ -30,7 +30,7 @@ function setRatingColor(rating, element) {
   element.style.color =
     rating < 5.0 ? "red" : rating < 7.0 ? "yellow" : "green";
 }
-async function getMoviesByName(name, selectFields, page = 1, limit = 1) {
+async function getMoviesByName(name, selectFields, page = 1, limit = 5) {
   try {
     const response = await fetch(
       "https://api.kinopoisk.dev/v1.3/movie?" +
@@ -85,16 +85,17 @@ function showResults(event) {
       return;
     }
     getMoviesByName(filmName, selectFields).then(async (movies) => {
-      if (movies.length === 0) {
+      const exactMatch =
+        movies.find((movie) => movie.name.toLowerCase().startsWith(filmName)) ??
+        movies[0];
+      if (!exactMatch) {
         resetUI();
         showMessage("Такого фильма нет на Кинопоиске.");
       } else {
-        movies.forEach(async (movie) => {
-          updateUI(movie);
-          movieCountriesArr = movie.countries.map((country) => country.name);
-          const countryCodesForThisMovie = await getCountryCodes();
-          updateFlags(countryCodesForThisMovie);
-        });
+        updateUI(exactMatch);
+        movieCountriesArr = exactMatch.countries.map((country) => country.name);
+        const countryCodesForThisMovie = await getCountryCodes();
+        updateFlags(countryCodesForThisMovie);
       }
     });
   }
@@ -126,7 +127,7 @@ function updateUI(movie) {
           <div class="actor__info"><span class="actor__name">${
             person.name ?? person.enName
           }</span><span class="actor__description">${
-          person.description ?? ""
+          person.description ?? "cameo"
         }</span></div>
         </div>`
       )
