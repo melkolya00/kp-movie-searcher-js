@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
     <script type="module" src="kinopoisk_search.js" defer></script>
-    <!-- <script type="module" src="carousel.js" defer></script> -->
 </head>
+
 <body>
     <header class="main-header">
         <div class="logo">KP Search</div>
@@ -22,18 +23,19 @@
             </ul>
         </nav>
     </header>
-    
-        <div class="form__group field">
-            <input type="input" class="form__field" placeholder="Film title" name="title" id='title' required />
-            <label for="title" class="form__label">Film Title</label>
+
+    <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Film title" name="title" id='title' required />
+        <label for="title" class="form__label">Film Title</label>
     </div>
     <div class="head__block">
         <div class="title__block">
-            <p id = "movieTitle"></p>
-            <p id = "movieRating"></p>
+            <p id="movieTitle"></p>
+            <p id="movieRating"></p>
+            <p id="movieAge"></p>
         </div>
-        <p id = "movieGenres"></p>
-        <p id = "movieLength"></p>
+        <p id="movieGenres"></p>
+        <p id="movieLength"></p>
         <div id="movieCountries"></div>
     </div>
     <div class="result__block">
@@ -48,4 +50,5 @@
     </div>
     <div id="hint"></div>
 </body>
+
 </html>

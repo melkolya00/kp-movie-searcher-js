@@ -7,6 +7,7 @@ let currentMovieName = "";
 const selectFields = [
   "id",
   "name",
+  "ageRating",
   "backdrop.previewUrl",
   "poster.url",
   "genres.name",
@@ -26,9 +27,9 @@ const selectFields = [
 const headers = {
   "X-API-KEY": API_KEY,
 };
-function setRatingColor(rating, element) {
+function setColor(value, element, first, second, color1, color2, color3) {
   element.style.color =
-    rating < 5.0 ? "red" : rating < 7.0 ? "yellow" : "green";
+    value < first ? color1 : value < second ? color2 : color3;
 }
 async function getMoviesByName(name, selectFields, page = 1, limit = 5) {
   try {
@@ -57,27 +58,9 @@ async function getMoviesByName(name, selectFields, page = 1, limit = 5) {
 }
 document.addEventListener("keyup", showResults);
 
-function resetUI() {
-  elements.backgroundElem.style.backgroundImage = "";
-  elements.backgroundElem.classList.remove("loaded");
-  elements.backgroundElem.style.filter = "";
-  elements.movieTitle.innerText = "";
-  elements.movieRating.innerText = "";
-  elements.movieGenres.innerText = "";
-  elements.movieLength.innerText = "";
-  elements.moviePoster.src = "";
-  elements.moviePoster.style.opacity = 0;
-  elements.movieDesc.innerText = "";
-  elements.descBlock.classList.remove("fade-in");
-  elements.actorsBlock.innerHTML = "";
-  elements.descBlock.style.opacity = 0;
-  elements.movieDesc.style.opacity = 0;
-  elements.movieCountries.innerHTML = "";
-}
-
 function showResults(event) {
   if (event.code.toLowerCase() === "enter") {
-    elements.movieCountries.innerHTML = "";
+    resetUI();
     const filmName = document.querySelector("#title").value.trim();
     if (!filmName) {
       resetUI();
@@ -115,6 +98,19 @@ function updateUI(movie) {
   //   });
   // });
   elements.movieRating.innerText = movie.rating.kp;
+  if (movie.ageRating !== null) {
+    elements.movieAge.innerText = `${movie.ageRating}+`;
+    elements.movieAge.style.border = "1px solid";
+    setColor(
+      movie.ageRating,
+      elements.movieAge,
+      12,
+      16,
+      "#94bc70",
+      "#d2aa6c",
+      "#d28c80"
+    );
+  }
   if (movie.persons.photo !== null) {
     elements.actorsBlock.innerHTML = movie.persons
       .slice(0, 5)
@@ -127,7 +123,7 @@ function updateUI(movie) {
           <div class="actor__info"><span class="actor__name">${
             person.name ?? person.enName
           }</span><span class="actor__description">${
-          person.description ?? "cameo"
+          person.description ?? ""
         }</span></div>
         </div>`
       )
@@ -144,7 +140,9 @@ function updateUI(movie) {
         movie.movieLength % 60
       } мин.`);
   elements.moviePoster.style.opacity = 0;
-  elements.moviePoster.src = movie.poster.url;
+  movie.poster.url
+    ? (elements.moviePoster.src = movie.poster.url)
+    : showMessage("У данного фильма нет постера.");
   elements.moviePoster.onload = () => {
     setTimeout(() => {
       elements.moviePoster.style.opacity = 1;
@@ -156,16 +154,40 @@ function updateUI(movie) {
     elements.descBlock.style.opacity = 1;
     elements.movieDesc.style.opacity = 1;
   }, 500);
-  if (!movie.poster) {
-    showMessage("У данного фильма нет постера.");
-  }
   if (!movie.description) {
     showMessage("У данного фильма нет описания.");
   }
 
-  setRatingColor(movie.rating.kp, elements.movieRating);
+  setColor(
+    movie.rating.kp,
+    elements.movieRating,
+    5.0,
+    7.0,
+    "red",
+    "yellow",
+    "var(--gradient-end)"
+  );
 }
 
+function resetUI() {
+  elements.backgroundElem.style.backgroundImage = "";
+  elements.backgroundElem.classList.remove("loaded");
+  elements.backgroundElem.style.filter = "";
+  elements.movieTitle.innerText = "";
+  elements.movieRating.innerText = "";
+  elements.movieAge.innerText = "";
+  elements.movieAge.style.border = "none";
+  elements.movieGenres.innerText = "";
+  elements.movieLength.innerText = "";
+  elements.moviePoster.src = "";
+  elements.moviePoster.style.opacity = 0;
+  elements.movieDesc.innerText = "";
+  elements.descBlock.classList.remove("fade-in");
+  elements.actorsBlock.innerHTML = "";
+  elements.descBlock.style.opacity = 0;
+  elements.movieDesc.style.opacity = 0;
+  elements.movieCountries.innerHTML = "";
+}
 function updateFlags(codes) {
   const flagImages = codes.map((code) => {
     return code === "SU"

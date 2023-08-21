@@ -4,6 +4,7 @@ export const backgroundElem = resultBlock.querySelector(".result__background");
 export const movieTitle = document.querySelector("#movieTitle");
 export const movieRating = document.querySelector("#movieRating");
 export const movieGenres = document.querySelector("#movieGenres");
+export const movieAge = document.querySelector("#movieAge");
 export const moviePoster = document.querySelector("#moviePoster");
 export const movieDesc = document.querySelector("#movieDesc");
 export const movieLength = document.querySelector("#movieLength");
