@@ -13,11 +13,15 @@ const selectFields = [
   "movieLength",
   "persons.id",
   "persons.name",
+  "persons.enName",
   "persons.photo",
+  "persons.description",
+  "persons.enProfession",
   "year",
   "countries.name",
   "rating.kp",
   "description",
+  "isSeries",
 ];
 const headers = {
   "X-API-KEY": API_KEY,
@@ -101,7 +105,7 @@ function updateUI(movie) {
   setTimeout(() => {
     elements.backgroundElem.classList.add("loaded");
   }, 2000);
-  elements.backgroundElem.style.filter = "blur(30px)";
+  elements.backgroundElem.style.filter = "blur(20px)";
   elements.movieTitle.innerText = `${movie.name} (${movie.year})`;
   // currentMovieName = movie.name;
   // getActorsByFilm(currentMovieName).then((actors) => {
@@ -116,8 +120,14 @@ function updateUI(movie) {
       .map(
         (person) => `
         <div class="actor">
-          <img class="actor__photo" src="${person.photo}" alt="${person.name}" width="115" height="182"/>
-          <div class="actor__name">${person.name}</div>
+          <img class="actor__photo" src="${person.photo}" alt="${
+          person.name
+        }" width="115" height="182"/>
+          <div class="actor__info"><span class="actor__name">${
+            person.name ?? person.enName
+          }</span><span class="actor__description">${
+          person.description ?? ""
+        }</span></div>
         </div>`
       )
       .join("");
@@ -125,9 +135,13 @@ function updateUI(movie) {
   elements.movieGenres.innerText = movie.genres
     .map((genre) => genre.name)
     .join(", ");
-  elements.movieLength.innerText = `${movie.movieLength} мин. / ${Math.floor(
-    movie.movieLength / 60
-  )} ч. ${movie.movieLength % 60} мин.`;
+  movie.isSeries
+    ? "сериал"
+    : (elements.movieLength.innerText = `${
+        movie.movieLength
+      } мин. / ${Math.floor(movie.movieLength / 60)} ч. ${
+        movie.movieLength % 60
+      } мин.`);
   elements.moviePoster.style.opacity = 0;
   elements.moviePoster.src = movie.poster.url;
   elements.moviePoster.onload = () => {
@@ -167,6 +181,11 @@ function showMessage(msg) {
     elements.hintElem.style.opacity = 0;
   }, 2000);
 }
+
+// window.addEventListener("scroll", function () {
+//   let header = document.querySelector(".main-header");
+//   header.classList.toggle("sticky", window.scrollY > 0);
+// });
 
 export function getMovieCountries() {
   return movieCountriesArr;
