@@ -119,7 +119,7 @@ function updateUI(movie) {
         <div class="actor">
           <img class="actor__photo" src="${person.photo}" alt="${
           person.name
-        }" width="115" height="182"/>
+        }" width="115" height="182" style="object-fit: cover;"/>
           <div class="actor__info"><span class="actor__name">${
             person.name ?? person.enName
           }</span><span class="actor__description">${
