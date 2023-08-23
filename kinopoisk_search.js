@@ -1,9 +1,11 @@
 import { API_KEY } from "./config.js";
 import { getCountryCodes } from "./country_flags.js";
-import { getActorsByFilm } from "./kinopoisk_actors.js";
+import { fetchSimilarMovies } from "./search-similar-movies.js";
+// import { getActorsByFilm } from "./kinopoisk_actors.js";
 import * as elements from "./elements.js";
 let movieCountriesArr = [];
 let currentMovieName = "";
+let similarIds = [];
 const selectFields = [
   "id",
   "name",
@@ -21,6 +23,7 @@ const selectFields = [
   "year",
   "countries.name",
   "rating.kp",
+  "similarMovies.id",
   "description",
   "isSeries",
 ];
@@ -59,7 +62,7 @@ async function getMoviesByName(name, selectFields, page = 1, limit = 5) {
 document.addEventListener("keyup", showResults);
 
 function showResults(event) {
-  if (event.code.toLowerCase() === "enter") {
+  if (event.code && event.code.toLowerCase() === "enter") {
     resetUI();
     const filmName = document.querySelector("#title").value.trim();
     if (!filmName) {
@@ -75,6 +78,8 @@ function showResults(event) {
         resetUI();
         showMessage("Такого фильма нет на Кинопоиске.");
       } else {
+        similarIds = exactMatch.similarMovies.map((similar) => similar.id);
+        console.log(similarIds);
         updateUI(exactMatch);
         movieCountriesArr = exactMatch.countries.map((country) => country.name);
         const countryCodesForThisMovie = await getCountryCodes();
@@ -119,7 +124,7 @@ function updateUI(movie) {
         <div class="actor">
           <img class="actor__photo" src="${person.photo}" alt="${
           person.name
-        }" width="115" height="182" style="object-fit: cover;"/>
+        }" width="115" height="182" style = "object-fit:cover" draggable = "false"/>
           <div class="actor__info"><span class="actor__name">${
             person.name ?? person.enName
           }</span><span class="actor__description">${
@@ -157,6 +162,12 @@ function updateUI(movie) {
   if (!movie.description) {
     showMessage("У данного фильма нет описания.");
   }
+  if (similarIds && similarIds.length > 0) {
+    fetchSimilarMovies(similarIds);
+  } else {
+    showMessage("Похожие фильмы не найдены");
+    elements.similarBlock.style.display = "none";
+  }
 
   setColor(
     movie.rating.kp,
@@ -187,6 +198,7 @@ function resetUI() {
   elements.descBlock.style.opacity = 0;
   elements.movieDesc.style.opacity = 0;
   elements.movieCountries.innerHTML = "";
+  elements.similarBlock.innerHTML = "";
 }
 function updateFlags(codes) {
   const flagImages = codes.map((code) => {
@@ -214,3 +226,4 @@ export function getMovieCountries() {
   return movieCountriesArr;
 }
 export { currentMovieName };
+// export { similarIds };

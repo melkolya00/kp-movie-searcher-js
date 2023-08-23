@@ -1,3 +1,15 @@
+body {
+  font-family: "Comfortaa", cursive;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  color: var(--primary-white);
+  background-color: var(--primary-bg-color);
+}
+
 :root {
   --primary-white: #fff;
   --primary-bg-color: #222222;
@@ -6,17 +18,6 @@
   --gradient-start: #11998e;
   --gradient-end: #38ef7d;
   --overlay-color: rgba(0, 0, 0, 0.5);
-}
-
-body {
-  font-family: "Comfortaa", cursive;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  color: var(--primary-white);
-  background-color: var(--primary-bg-color);
 }
 
 .head__block {
@@ -97,6 +98,7 @@ body {
   border-radius: 10px;
   padding: 20px 20px 40px;
   opacity: 0;
+  cursor: pointer;
 }
 
 .descBlock.fade-in {
@@ -124,6 +126,7 @@ body {
   margin-right: 40px;
   opacity: 0;
   transition: opacity 1s;
+  cursor: pointer;
 }
 
 .form__field {
@@ -185,15 +188,36 @@ body {
   box-shadow: none;
 }
 
-.actors__block {
+.actors__block,
+.similar-movies {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  max-width: 850px;
 }
 
-.actor {
+.similar-movies {
+  margin-top: 50px;
+}
+
+.similar__title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.movies__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.actor,
+.movie {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,29 +226,42 @@ body {
   position: relative;
 }
 
-.actor__photo {
+.actor__photo,
+.movie__photo {
   border-radius: 10px;
   margin-bottom: 8px;
   cursor: pointer;
 }
 
-.actor__info {
+.actor__info,
+.movie__info {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-color: var(--overlay-color);
   border-radius: 10px;
   padding: 10px 0;
   cursor: pointer;
 }
 
-.actor__name {
+.actor__info {
+  background-color: var(--overlay-color);
+}
+
+.actor__name,
+.movie__name {
   display: block;
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
   font-weight: bold;
   text-align: center;
   margin-bottom: 8px;
+}
+
+.actor__name {
+  font-size: 0.8rem;
+}
+.movie__name {
+  font-size: 1.2rem;
 }
 
 .actor__description {

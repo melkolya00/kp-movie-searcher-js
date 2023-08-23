@@ -11,4 +11,5 @@ export const movieLength = document.querySelector("#movieLength");
 export const movieCountries = document.querySelector("#movieCountries");
 export const descBlock = document.querySelector(".descBlock");
 export const actorsBlock = document.querySelector(".actors__block");
+export const similarBlock = document.querySelector(".similar-movies");
 export let movieCountriesArr = [];
