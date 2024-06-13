@@ -78,11 +78,11 @@ function showResults(event) {
           exactMatch.id,
           selectFields
         );
-        similarIds = movieDetails.docs[0].similarMovies.map(
+        console.log(movieDetails);
+        similarIds = movieDetails.docs[0].similarMovies?.map(
           (similar) => similar.id
         );
         console.log(similarIds);
-        console.log(movieDetails);
         updateUI(movieDetails);
         movieCountriesArr = movieDetails.docs[0].countries.map(
           (country) => country.name
