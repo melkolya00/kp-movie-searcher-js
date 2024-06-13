@@ -22,7 +22,7 @@ export function fetchSimilarMovies(idsArray) {
   let movieCards = [];
   elements.similarBlock.insertAdjacentHTML(
     "afterbegin",
-    "<span class='similar__title'>Похожие фильмы</span> <div class = 'movies__wrapper'></div>"
+    "<span class='similar__title'>Похожие фильмы/сериалы</span> <div class = 'movies__wrapper'></div>"
   );
   let moviesWrapper = document.querySelector(".movies__wrapper");
   idsArray.slice(0, 5).forEach((id) => {
