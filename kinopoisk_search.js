@@ -163,10 +163,11 @@ function updateUI(movie) {
     showMessage("У данного фильма нет описания.");
   }
   if (similarIds && similarIds.length > 0) {
+    elements.similarBlock.style.display = "flex";
     fetchSimilarMovies(similarIds);
   } else {
-    showMessage("Похожие фильмы не найдены");
     elements.similarBlock.style.display = "none";
+    showMessage("Похожие фильмы не найдены");
   }
 
   setColor(
