@@ -229,8 +229,19 @@ body {
 .actor__photo,
 .movie__photo {
   border-radius: 10px;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
   cursor: pointer;
+}
+
+.actor__photo {
+  margin-bottom: 8px;
+}
+.movie__photo {
+  margin-bottom: 14px;
+}
+.movie__photo:hover {
+  transform: scale(1.25);
+  transition: transform 1.5s;
 }
 
 .actor__info,
@@ -300,6 +311,7 @@ body {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--primary-white);
+  cursor: pointer;
 }
 
 .main-nav ul {
